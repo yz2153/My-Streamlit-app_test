@@ -1,1 +1,3 @@
 streamlit
+streamlit-elements
+git+https://github.com/okld/streamlit-elements.git
