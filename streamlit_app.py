@@ -67,3 +67,9 @@ if(st.button('Calculate BMI')):
 
 st.header('Test 3')
 st.subheader('')
+from streamlit_elements import elements, mui
+
+st.title("Hello streamlit-elements!")
+
+with elements("demo"):
+    mui.Button("Click Me", onClick=lambda: st.write("You clicked the button!"))
