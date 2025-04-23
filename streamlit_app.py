@@ -1,14 +1,14 @@
 import streamlit as st
 
 
-st.title("🎈 My new Streamlit app_模板測試")
-st.header('Test 1')
+st.title("🎈 My new Streamlit app_模板&基礎功能測試")
+st.header('Test 1：blank')
 st.write(
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
 
-st.header('Test 2')
-st.subheader('BMI Calculator')
+st.header('Test 2：BMI Calculator')
+# st.subheader('')
 st.caption('https://www.geeksforgeeks.org/a-beginners-guide-to-streamlit/')
 # TAKE WEIGHT INPUT in kgs
 weight = st.number_input("Enter your weight (in kgs)")
@@ -66,14 +66,33 @@ if(st.button('Calculate BMI')):
         st.error("Extremely Overweight")
 
 
-'''
-st.header('Test 3')
-st.subheader('')
 
-from streamlit_elements import elements, mui
+st.header('Test 3：API test')
 
-st.title("Hello streamlit-elements!")
+st.subheader('1. st.checkbox')
+agree = st.checkbox("Check it")
+if agree:
+    st.write("Great!")
 
-with elements("demo"):
-    mui.Button("Click Me", onClick=lambda: st.write("You clicked the button!"))
-'''
+st.subheader('2. st.multiselect')
+options = st.multiselect(
+    "What are your favorite colors",
+    ["Green", "Yellow", "Red", "Blue"],
+    ["Yellow", "Red"],
+)
+
+st.write("You selected:", str(options))
+
+st.subheader('3. st.button')
+st.button("Reset", type="primary")
+if st.button("Say hello"):
+    st.write("Why hello there")
+else:
+    st.write("Goodbye")
+
+st.subheader('4. st.toggle')
+on = st.toggle("Activate feature")
+if on:
+    st.write("Feature activated!")
+else:
+    st.warning('This is a warning', icon="⚠️")
