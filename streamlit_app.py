@@ -93,6 +93,7 @@ else:
 st.subheader('4. st.toggle')
 on = st.toggle("Activate feature")
 if on:
-    st.write("Feature activated!")
+    st.success("Feature activated!", icon="✅")
+    # st.write("Feature activated!")
 else:
     st.warning('This is a warning', icon="⚠️")
