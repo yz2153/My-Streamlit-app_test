@@ -1,99 +1,110 @@
 import streamlit as st
 
+st.title(":cup_with_straw: The Destined Pour")
+st.header("Select the generator mode you want!")
 
-st.title("🎈 My new Streamlit app_模板&基礎功能測試")
-st.header('Test 1：blank')
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+st.markdown("<p style='font-size:20px; color:DarkMagenta; font-weight:bold;'>Which mode would you like to try?</p>", unsafe_allow_html=True)
+option = st.selectbox(
+    "",
+    ("Random generator", "Calories", "Price", "Ingredient"),
+    index=None, 
+    placeholder=" Select generator method... ", 
+    label_visibility="collapsed"
 )
 
-st.header('Test 2：BMI Calculator')
-# st.subheader('')
-st.caption('https://www.geeksforgeeks.org/a-beginners-guide-to-streamlit/')
-# TAKE WEIGHT INPUT in kgs
-weight = st.number_input("Enter your weight (in kgs)")
+st.write(":ideograph_advantage:")
 
-# TAKE HEIGHT INPUT
-# radio button to choose height format
-status = st.radio('Select your height format: ',
-                  ('cms', 'meters', 'feet'))
-
-# compare status value
-if(status == 'cms'):
-    # take height input in centimeters
-    height = st.number_input('Centimeters')
-
-    try:
-        bmi = weight / ((height/100)**2)
-    except:
-        st.text("Enter some value of height")
-
-elif(status == 'meters'):
-    # take height input in meters
-    height = st.number_input('Meters')
-
-    try:
-        bmi = weight / (height ** 2)
-    except:
-        st.text("Enter some value of height")
+if option != None:
+    st.markdown(f"""
+    <div style='font-size:18px; font-weight:bold;'>
+    ✔️ You selected: {option} </div>""",
+    unsafe_allow_html=True)
 
 else:
-    # take height input in feet
-    height = st.number_input('Feet')
+    st.markdown(f"""
+    <div style='font-size:18px; font-weight:bold;'>
+    You should select the generator mode 🎲
+    </div>""", unsafe_allow_html=True)
 
-    # 1 meter = 3.28
-    try:
-        bmi = weight / (((height/3.28))**2)
-    except:
-        st.text("Enter some value of height")
+st.divider()
 
-# check if the button is pressed or not
-if(st.button('Calculate BMI')):
+# 初始化
+if 'dice_rolled' not in st.session_state:
+    st.session_state['dice_rolled'] = False
+if 'add_to_fav' not in st.session_state:
+    st.session_state['add_to_fav'] = False
 
-    # print the BMI INDEX
-    st.text("Your BMI Index is {}.".format(bmi))
+if option == "Random generator":
+    st.subheader("Random generator")
+    
+    # 🎲 點擊按鈕後，記住狀態
+    if st.button('Roll the dice!'):
+        st.session_state['dice_rolled'] = True
+    
+    if st.session_state['dice_rolled']:
+        st.write('\# 執行基本的隨機function') # 這只是檢察功能暫放的東西
 
-    # give the interpretation of BMI index
-    if(bmi < 16):
-        st.error("You are Extremely Underweight")
-    elif(bmi >= 16 and bmi < 18.5):
-        st.warning("You are Underweight")
-    elif(bmi >= 18.5 and bmi < 25):
-        st.success("Healthy")
-    elif(bmi >= 25 and bmi < 30):
-        st.warning("Overweight")
-    elif(bmi >= 30):
-        st.error("Extremely Overweight")
+        # 連接好方程式之後要再改版這個區塊
+
+        st.markdown(f"""
+        <div style='font-size:20px; font-weight:bold;'>
+        [store_name] Name_of_the_drink
+        </div>
+        """, unsafe_allow_html=True)
+    
+        # ------
+       
+        # 這裡要再加 Badge
+        st.markdown(
+        ":green-badge[:material/check: Success]"
+        )
+        #:orange-badge[⚠️ Needs review] :gray-badge[Deprecated]"
+        
+        
+        col_price, col_calories = st.columns(2)
+        with col_price:
+            # 這邊之後要加上產出飲料的價位
+            st.markdown(f"""
+            <p style='margin-bottom: 2px; font-size:16px;'> 💸 Price </p>
+            <p style='margin-bottom: 2px; font-size:24px; font-weight:bold;'> fstr_Price </p>
+            """, unsafe_allow_html=True
+            )
+
+
+        with col_calories:
+            # 這邊之後要加上產出飲料的熱量
+            st.markdown(f"""
+            <p style='margin-bottom: 2px; font-size:16px;'> 🔥 Calories </p>
+            <p style='margin-bottom: 2px; font-size:24px; font-weight:bold;'> fstr_Calories </p>
+            """, unsafe_allow_html=True
+            )
+
+        st.session_state['add_to_fav'] = st.toggle('Add to favorite?', key="toggle_fav")
+        if st.session_state['add_to_fav']:
+            st.success("🌟 已加入最愛！")
+
+    # 如果按下reset 把'dice_rolled'和'add_to_fav'的session.state重置
+    if st.button("🔄 Reset"):
+        st.session_state['dice_rolled'] = False
+        st.session_state['add_to_fav'] = False
+
+#
+        
+
+
+elif option == "Calories":
+    st.subheader("Calories")
 
 
 
-st.header('Test 3：API test')
+elif option == "Price":
+    st.subheader("Price")
 
-st.subheader('1. st.checkbox')
-agree = st.checkbox("Check it")
-if agree:
-    st.write("Great!")
 
-st.subheader('2. st.multiselect')
-options = st.multiselect(
-    "What are your favorite colors",
-    ["Green", "Yellow", "Red", "Blue"],
-    ["Yellow", "Red"],
-)
 
-st.write("You selected:", str(options))
+elif option == "Ingredient":
+    st.subheader("Ingredient")
 
-st.subheader('3. st.button')
-st.button("Reset", type="primary")
-if st.button("Say hello"):
-    st.write("Why hello there")
+
 else:
-    st.write("Goodbye")
-
-st.subheader('4. st.toggle')
-on = st.toggle("Activate feature")
-if on:
-    st.success("Feature activated!", icon="✅")
-    # st.write("Feature activated!")
-else:
-    st.warning('This is a warning', icon="⚠️")
+   st.empty()
